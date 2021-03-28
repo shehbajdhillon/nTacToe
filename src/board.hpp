@@ -14,8 +14,12 @@ class Board {
     bool validateCols();
     bool validateDiag();
   public:
+    int translate(int num);
+    int placeMark(int coord, char mark);
+    bool isOccupied(int coord);
     bool validateBoard();
     vector<vector<int>> getGrid();
+    void printGrid();
     int getSize();
     Board(int size);
 };

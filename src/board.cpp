@@ -1,11 +1,15 @@
 #include "board.hpp"
 #include <vector>
+#include <iostream>
 
+#define EMPTY_VALUE 32
+
+using namespace std;
 
 Board::Board(int size) {
   this->size = size;
   for (int i = 0; i < size; i++) {
-    this->grid.push_back(vector<int>(size, -1));
+    this->grid.push_back(vector<int>(size, EMPTY_VALUE));
   }
 }
 
@@ -20,9 +24,16 @@ int Board::getSize() {
 }
 
 
+bool Board::validateBoard() {
+  return
+    (this->validateCols() || this->validateDiag() ||
+     this->validateRows());
+}
+
+
 bool Board::validateRow(vector<int> row) {
   for(int i = 0; i < this->size - 1; i++) {
-    if (row[i] == -1 || row[i] != row[i + 1]) {
+    if (row[i] == EMPTY_VALUE || row[i] != row[i + 1]) {
       return false;
     }
   }
@@ -64,3 +75,51 @@ bool Board::validateDiag() {
 }
 
 
+void Board::printGrid() {
+  for (vector<int> row: this->grid) {
+    cout << " ";
+    for (int i: row) {
+      cout << (char)i << " | ";
+    }
+    cout << "\n";
+    for (int i = 0; i < this->size; i++) {
+      cout << "----";
+    }
+    cout << "\n";
+  }
+}
+
+
+bool Board::isOccupied(int coord) {
+  int row = coord / this->size;
+  int col = coord % this->size;
+
+  return this->grid[row][col] != EMPTY_VALUE;
+}
+
+
+int Board::placeMark(int coord, char mark) {
+  if (!this->isOccupied(coord)) {
+
+    int row = coord / this->size;
+    int col = coord % this->size;
+    this->grid[row][col] = mark;
+    return 1;
+  }
+  return -1;
+}
+
+int Board::translate(int num) {
+  if (num == 7 || num == 8 || num == 9) {
+    return num - 7;
+  }
+  else if (num == 4 || num == 5 || num == 6) {
+    return num - 1;
+  }
+  else if (num == 1 || num == 2 || num == 3) {
+    return num + 5;
+  }
+  else {
+    return -1;
+  }
+}
