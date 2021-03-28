@@ -106,20 +106,5 @@ int Board::placeMark(int coord, char mark) {
     this->grid[row][col] = mark;
     return 1;
   }
-  return -1;
-}
-
-int Board::translate(int num) {
-  if (num == 7 || num == 8 || num == 9) {
-    return num - 7;
-  }
-  else if (num == 4 || num == 5 || num == 6) {
-    return num - 1;
-  }
-  else if (num == 1 || num == 2 || num == 3) {
-    return num + 5;
-  }
-  else {
-    return -1;
-  }
+  return 0;
 }
