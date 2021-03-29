@@ -7,10 +7,9 @@
 
 #include "player.hpp"
 #include "board.hpp"
+#include "utils.hpp"
 
 using namespace std;
-
-int translate(int num);
 
 int main() {
   int size, numPlayers;
@@ -42,7 +41,7 @@ int main() {
     cout << "\n\n";
     int coord;
     Player currPlayer = playersList[idx];
-    board.printGrid();
+    printGrid(board.getGrid(), size);
     cout << currPlayer.getName() << "'s " << "turn.\n";
     cin >> coord;
     coord = translate(coord);
@@ -50,7 +49,7 @@ int main() {
       idx = (++idx) % (numPlayers);
       symbolsPlaced--;
       if (board.validateBoard()) {
-        board.printGrid();
+        printGrid(board.getGrid(), size);
         cout << currPlayer.getName() << " is the winner\n";
         break;
       }
@@ -62,24 +61,8 @@ int main() {
 
   if (!symbolsPlaced) {
     cout << "\nDRAW!\n";
-    board.printGrid();
+    printGrid(board.getGrid(), size);
   }
 
   return 0;
-}
-
-
-int translate(int num) {
-  if (num == 7 || num == 8 || num == 9) {
-    return num - 7;
-  }
-  else if (num == 4 || num == 5 || num == 6) {
-    return num - 1;
-  }
-  else if (num == 1 || num == 2 || num == 3) {
-    return num + 5;
-  }
-  else {
-    return -1;
-  }
 }
