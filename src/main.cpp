@@ -49,12 +49,15 @@ int main() {
       idx = (++idx) % (numPlayers);
       symbolsPlaced--;
       if (board.validateBoard()) {
+        system("clear");
         printGrid(board.getGrid(), size);
         cout << currPlayer.getName() << " is the winner\n";
         break;
       }
+      system("clear");
     }
     else {
+      system("clear");
       cout << "Error Placing mark, try again\n";
     }
   }
